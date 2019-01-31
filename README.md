@@ -178,6 +178,17 @@ var result = solrClient.search(query)
     });
 ```
 
+You can also use `async`/`await`:
+
+```js
+try {
+   const result = await solrClient.search(query);
+   console.log('Response:', result.response);
+} catch(e) {
+   console.error(err);
+}
+```
+
 ## Test & Coverage & Docs
 
 ```
