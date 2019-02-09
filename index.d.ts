@@ -29,7 +29,7 @@ declare module 'solr-node' {
       df(params: string): this;
       wt(params: string): this;
       addParams(params: Array<{ field: string; value: any }>): this;
-      spatial(params: Array<{ pt: string; sfield: string; d: string }>): this;
+      spatial(params: { pt: string; sfield: string; d: string | number }): this;
       termsQuery(params: TermsQueryParams | string): this;
       mltQuery(params: MoreLikeThisQueryParams | string): this;
       spellcheckQuery(params: SpellcheckQueryParams | string): this;
@@ -51,6 +51,7 @@ declare module 'solr-node' {
         start: number;
         docs: T[];
       };
+      nextCursorMark?: string;
     }
 
     interface ClientOptions {
