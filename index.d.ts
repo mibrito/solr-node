@@ -60,7 +60,6 @@ declare module 'solr-node' {
       core?: string;
       rootPath?: string;
       protocol?: string;
-      debugLevel?: 'ALL' | 'DEBUG' | 'INFO' | 'ERROR';
     }
 
     interface UpdateOptions {
