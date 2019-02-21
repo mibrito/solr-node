@@ -154,6 +154,7 @@ declare module 'solr-node' {
     interface HighlightQueryParams {
       on?: boolean;
       q?: string;
+      method?: string;
       qparser?: string;
       fl: string | string[];
       snippets?: number;
