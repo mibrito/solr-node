@@ -239,7 +239,7 @@ describe('Client', function() {
 
     it('should get host url when authentication is set.', function() {
       //given
-      var protocol = 'http';
+      var protocol = 'https';
       var user = 'test';
       var password = 'test';
       var host = 'test.com';
