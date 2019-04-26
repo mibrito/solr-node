@@ -204,7 +204,7 @@ describe('Client', function() {
       expect(client.options).to.eql({
         host: '127.0.0.1',
         port: '8983',
-        core: 'test',
+        core: '',
 	user: 'test',
 	password: 'test',
         rootPath: 'solr',
@@ -247,7 +247,7 @@ describe('Client', function() {
       //when
       var hostUrl = testClient._makeHostUrl(protocol, host, port, user, password);
       //then
-      expect(hostUrl).to.equal('https://test:test@test.com');
+      expect(hostUrl).to.equal('https://test:test@test.com:8983');
     });
   });
 
