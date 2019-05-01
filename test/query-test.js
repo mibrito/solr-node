@@ -681,8 +681,8 @@ describe('Query', function() {
       var testQuery = new Query();
       var params = {
         on: true,
-        build: true,
         q: 'tes',
+        build: true,
         count: 10,
         dictionary: 'testDictionary'
       };
@@ -692,11 +692,11 @@ describe('Query', function() {
           .suggestQuery(params);
       //then
       expect(query.params).to.eql([
-        'on=true',
-        'build=true',
-        'q=tes',
-        'count=10',
-        'dictionary=testDictionary'
+        'suggest=true',
+        'suggest.q=tes',
+        'suggest.build=true',
+        'suggest.count=10',
+        'suggest.dictionary=testDictionary'
       ]);
     });
 
