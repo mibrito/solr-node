@@ -639,6 +639,90 @@ describe('Query', function() {
     });
   });
 
+  describe('#suggestQuery', function() {
+    it('should get suggest params when params not string and object.', function() {
+      //given
+      var testQuery = new Query();
+      var params = null;
+      //when
+      var query = testQuery.suggestQuery(params);
+      //then
+      expect(query.params).to.eql([]);
+    });
+
+    it('should get suggest params when params is string.', function() {
+      //given
+      var testQuery = new Query();
+      var params = 'suggest=true&suggest.dictionary=testDictionary&suggest.q=tes';
+      //when
+      var query = testQuery.suggestQuery(params);
+      //then
+      expect(query.params).to.eql([
+        'suggest=true&suggest.dictionary=testDictionary&suggest.q=tes'
+      ]);
+    });
+
+    it('should get suggest params when params is object(on:false).', function() {
+      //given
+      var testQuery = new Query();
+      var params = {
+        on: false
+      };
+      //when
+      var query = testQuery.suggestQuery(params);
+      //then
+      expect(query.params).to.eql([
+        "suggest=true"
+      ]);
+    });
+
+    it('should get suggest params when params is object.', function() {
+      //given
+      var testQuery = new Query();
+      var params = {
+        on: true,
+        q: 'tes',
+        count: 10
+      };
+      //when
+      var query =
+        testQuery
+          .suggestQuery(params);
+      //then
+      expect(query.params).to.eql([
+        'suggest=true',
+        'suggest.q=tes',
+        'suggest.count=10',
+        'suggest.dictionary=testDictionary'
+      ]);
+    });
+
+    it('should get suggest params when params is other params.', function() {
+      //given
+      var testQuery = new Query();
+      var params = {
+        build: true,
+        suggest: true,
+        suggesterClass: 'testDictionary',
+        maxSuggestions: 10,
+      };
+      //when
+      var query =
+        testQuery
+          .q('tes')
+          .suggestQuery(params);
+      //then
+      expect(query.params).to.eql([
+        'suggest.q=tes',
+        'suggest=true',
+        'suggest.build=true',
+        'suggest.count=10',
+        'suggest.dictionary=testDictionary',
+        'q=title:test'
+      ]);
+    });
+  });
+
   describe('#facetQuery', function() {
     it('should get facet params when params not string and object.', function() {
       //given
