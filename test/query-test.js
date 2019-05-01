@@ -672,7 +672,7 @@ describe('Query', function() {
       var query = testQuery.suggestQuery(params);
       //then
       expect(query.params).to.eql([
-        "suggest=true"
+        "suggest=false"
       ]);
     });
 
@@ -681,8 +681,10 @@ describe('Query', function() {
       var testQuery = new Query();
       var params = {
         on: true,
+        build=true,
         q: 'tes',
-        count: 10
+        count: 10,
+        dictionary='testDictionary'
       };
       //when
       var query =
@@ -690,10 +692,11 @@ describe('Query', function() {
           .suggestQuery(params);
       //then
       expect(query.params).to.eql([
-        'suggest=true',
-        'suggest.q=tes',
-        'suggest.count=10',
-        'suggest.dictionary=testDictionary'
+        'on=true',
+        'build=true',
+        'q=tes',
+        'count=10',
+        'dictionary=testDictionary'
       ]);
     });
 
@@ -701,10 +704,11 @@ describe('Query', function() {
       //given
       var testQuery = new Query();
       var params = {
+        q: 'tes',
+        on: true,
         build: true,
-        suggest: true,
-        suggesterClass: 'testDictionary',
-        maxSuggestions: 10,
+        count: 10,
+        dictionary: 'testDictionary'
       };
       //when
       var query =
@@ -713,12 +717,11 @@ describe('Query', function() {
           .suggestQuery(params);
       //then
       expect(query.params).to.eql([
-        'suggest.q=tes',
+        'q=tes',
         'suggest=true',
-        'suggest.build=true',
-        'suggest.count=10',
-        'suggest.dictionary=testDictionary',
-        'q=title:test'
+        'build=true',
+        'count=10',
+        'dictionary=testDictionary'
       ]);
     });
   });
