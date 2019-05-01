@@ -713,15 +713,14 @@ describe('Query', function() {
       //when
       var query =
         testQuery
-          .q('tes')
           .suggestQuery(params);
       //then
       expect(query.params).to.eql([
-        'q=tes',
         'suggest=true',
-        'build=true',
-        'count=10',
-        'dictionary=testDictionary'
+        'suggest.q=tes',
+        'suggest.build=true',
+        'suggest.count=10',
+        'suggest.dictionary=testDictionary'
       ]);
     });
   });
