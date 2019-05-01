@@ -681,10 +681,10 @@ describe('Query', function() {
       var testQuery = new Query();
       var params = {
         on: true,
-        build=true,
+        build: true,
         q: 'tes',
         count: 10,
-        dictionary='testDictionary'
+        dictionary: 'testDictionary'
       };
       //when
       var query =
