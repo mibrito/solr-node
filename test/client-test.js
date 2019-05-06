@@ -133,6 +133,25 @@ describe('Client', function() {
 
     nock('http://127.0.0.1:8983')
       .persist()
+      .filteringPath(/\/solr\/test\/suggest.*/g, '/test/suggest/mock')
+      .get('/test/suggest/mock')
+      .reply(200, JSON.stringify({
+        responseHeader: {
+          status: 0,
+          QTime: 86
+        },
+        suggest:{
+          'testDictionary': {
+            'tes':{
+              numFound:2,
+              suggestions:[]
+            }
+          }
+        }
+      }));
+
+    nock('http://127.0.0.1:8983')
+      .persist()
       .filteringPath(/\/solr\/test\/update.*/g, '/test/update/mock')
       .post('/test/update/mock')
       .reply(200, JSON.stringify({
@@ -702,6 +721,47 @@ describe('Client', function() {
       var result = client.spell(query);
       //then
       return expect(result).to.eventually.have.property('spellcheck');
+    });
+  });
+
+  describe('#suggest', function() {
+    it('should get suggest data.', function(done) {
+      //given
+      var client = new Client({core: 'test'});
+      var query =
+        client.query()
+          .suggestQuery({
+            q: 'tes',
+            suggest: true,
+            suggesterClass: 'testDictionary',
+            maxSuggestions: 3,
+            build: true
+          });
+      //when
+      client.suggest(query, function(err, result) {
+        //then
+        expect(err).to.not.exist;
+        expect(result.suggest).to.exist;
+        done();
+      });
+    });
+
+    it('should resolve with the suggest data when there is no callback', function() {
+      //given
+      var client = new Client({core: 'test'});
+      var query =
+        client.query()
+          .suggestQuery({
+            q: 'tes',
+            suggest: true,
+            suggesterClass: 'testDictionary',
+            count: 10,
+            build: true
+          });
+      //when
+      var result = client.suggest(query);
+      //then
+      return expect(result).to.eventually.have.property('suggest');
     });
   });
 

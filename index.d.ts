@@ -33,6 +33,7 @@ declare module 'solr-node' {
       termsQuery(params: TermsQueryParams | string): this;
       mltQuery(params: MoreLikeThisQueryParams | string): this;
       spellcheckQuery(params: SpellcheckQueryParams | string): this;
+      suggestQuery(params: SuggestQueryParams | string): this;
       facetQuery(params: FacetQueryParams | string): this;
       groupQuery(params: GroupQueryParams | string): this;
       hlQuery(params: HighlightQueryParams | string): this;
@@ -119,6 +120,14 @@ declare module 'solr-node' {
       alternativeTermCount?: number;
       reload?: boolean;
       accuracy?: number;
+    }
+
+    interface SuggestParams {
+      on?: boolean;
+      q: string;
+      build?: boolean;
+      count?: number;
+      suggesterClass?: string;
     }
 
     interface FacetQueryParams {
