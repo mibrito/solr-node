@@ -191,6 +191,27 @@ describe('Client', function() {
         protocol: 'http'
       });
     });
+
+    it('should create client when user:"test" and password:"test".', function() {
+      //given
+      var options = {
+        user: 'test',
+	password: 'test'
+      };
+      //when
+      var client = new Client(options);
+      //then
+      expect(client.options).to.eql({
+        host: '127.0.0.1',
+        port: '8983',
+        core: '',
+	user: 'test',
+	password: 'test',
+        rootPath: 'solr',
+        protocol: 'http'
+      });
+    });
+
   });
 
   describe('#_makeHostUrl', function() {
@@ -214,6 +235,19 @@ describe('Client', function() {
       var hostUrl = testClient._makeHostUrl(protocol, host, port);
       //then
       expect(hostUrl).to.equal('https://test.com');
+    });
+
+    it('should get host url when authentication is set.', function() {
+      //given
+      var protocol = 'https';
+      var user = 'test';
+      var password = 'test';
+      var host = 'test.com';
+      var port = '8983';
+      //when
+      var hostUrl = testClient._makeHostUrl(protocol, host, port, user, password);
+      //then
+      expect(hostUrl).to.equal('https://test:test@test.com:8983');
     });
   });
 
