@@ -1,3 +1,5 @@
+# NO LONGER MAINTAINED
+
 # solr-node
 
 Simple Solr Node Client Project
